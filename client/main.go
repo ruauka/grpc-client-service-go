@@ -1,3 +1,4 @@
+// Package main
 package main
 
 import (
@@ -27,5 +28,5 @@ func main() {
 
 	log.Println("Starting server...")
 
-	log.Fatal(http.ListenAndServe(":8000", loggedRouter))
+	log.Fatal(http.ListenAndServe(":8000", loggedRouter)) //nolint:gosec
 }

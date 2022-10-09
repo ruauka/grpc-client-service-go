@@ -1,3 +1,4 @@
+// Package strategy - Package strategy
 package strategy
 
 import (
@@ -25,6 +26,7 @@ type strategy struct {
 	client pb.ExecutorClient
 }
 
+// NewStrategy - конструктор подключения к gRPC-сервису.
 func NewStrategy() (Strategy, error) {
 	conn, err := grpc.Dial(
 		":8080",
@@ -43,6 +45,7 @@ func NewStrategy() (Strategy, error) {
 	}, nil
 }
 
+// Execute - вызов основной rpc процедуры.
 func (s strategy) Execute(ctx context.Context, req *request.Request) (*response.Response, error) {
 	payload := functions.FmtToGRPC(req)
 

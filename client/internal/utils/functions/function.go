@@ -25,41 +25,13 @@ func Validate(req *request.Request) error {
 	return nil
 }
 
-// DateDiff - вспомогательная функция расчета разницы в датах.
+// DateDiff - расчет разницы в датах.
 func DateDiff(date1, date2 time.Time) int32 {
 	duration := date2.Sub(date1).Hours() / dictionary.HourDivider
 	return int32(duration)
 }
 
-func FmtFromGRPC(resp *pb.Response) *response.Response {
-	var results []response.Result
-	enoughMoneyByMonths := [6]int32{}
-	delinquencyByMonths := [6]int32{}
-
-	for _, v := range resp.Results {
-		for i, j := range v.EnoughMoneyByMonths {
-			enoughMoneyByMonths[i] = j
-		}
-		for k, n := range v.DelinquencyByMonths {
-			delinquencyByMonths[k] = n
-		}
-
-		result := &response.Result{
-			EnoughMoneyByMonths:          enoughMoneyByMonths,
-			DelinquencyByMonths:          delinquencyByMonths,
-			DelinquencyDurationDaysTotal: v.DelinquencyDurationDaysTotal,
-			DelinquencySumTotal:          v.DelinquencySumTotal,
-		}
-		results = append(results, *result)
-	}
-
-	return &response.Response{
-		Version:     resp.Version,
-		ExecuteDate: resp.ExecuteDate,
-		Results:     results,
-	}
-}
-
+// FmtToGRPC - конвертация из *request.Request в *pb.Request.
 func FmtToGRPC(req *request.Request) *pb.Request {
 	var accountsSl []*pb.Account
 	for _, v := range req.Accounts {
@@ -82,5 +54,35 @@ func FmtToGRPC(req *request.Request) *pb.Request {
 		Surname: req.Surname,
 		Account: accountsSl,
 		Loan:    loansSl,
+	}
+}
+
+// FmtFromGRPC - конвертация из *pb.Response в *response.Response.
+func FmtFromGRPC(resp *pb.Response) *response.Response {
+	var results []response.Result
+	enoughMoneyByMonths := [6]int32{}
+	delinquencyByMonths := [6]int32{}
+
+	for _, v := range resp.Results {
+		for i, j := range v.EnoughMoneyByMonths { //nolint:gosimple
+			enoughMoneyByMonths[i] = j
+		}
+		for k, n := range v.DelinquencyByMonths { //nolint:gosimple
+			delinquencyByMonths[k] = n
+		}
+
+		result := &response.Result{
+			EnoughMoneyByMonths:          enoughMoneyByMonths,
+			DelinquencyByMonths:          delinquencyByMonths,
+			DelinquencyDurationDaysTotal: v.DelinquencyDurationDaysTotal,
+			DelinquencySumTotal:          v.DelinquencySumTotal,
+		}
+		results = append(results, *result)
+	}
+
+	return &response.Response{
+		Version:     resp.Version,
+		ExecuteDate: resp.ExecuteDate,
+		Results:     results,
 	}
 }

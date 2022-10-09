@@ -6,9 +6,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"metrics-service-1/internal/logic"
-	"metrics-service-1/internal/request"
-	"metrics-service-1/internal/utils/dictionary"
+	"service/internal/logic"
+	"service/internal/request"
+	"service/internal/utils/dictionary"
 )
 
 func TestNewResponse(t *testing.T) {
@@ -31,17 +31,17 @@ func NewTestData() *logic.Data {
 }
 
 func NewTestReq() *request.Request {
-	paymentDateBalance := 0
+	var paymentDateBalance int32 = 0
 
 	return &request.Request{
 		Name:    "Ivan",
 		Surname: "Ivanov",
-		Account: []request.Account{
+		Accounts: []request.Account{
 			{
 				PaymentDateBalance: &paymentDateBalance,
 			},
 		},
-		Loan: []request.Loan{
+		Loans: []request.Loan{
 			{
 				Payment:           0,
 				PaymentDate:       time.Time{},
