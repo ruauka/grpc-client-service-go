@@ -1,5 +1,5 @@
-// Package request - входящая структура.
-package request
+// Package entities - входящая структура.
+package entities
 
 import "time"
 

@@ -1,5 +1,5 @@
-// Package response - ответ сервиса.
-package response
+// Package entities - ответ сервиса.
+package entities
 
 // Response - Структура ответа.
 type Response struct {

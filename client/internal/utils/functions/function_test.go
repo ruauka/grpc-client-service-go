@@ -7,8 +7,7 @@ import (
 	"github.com/stretchr/testify/require"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"client/internal/request"
-	"client/internal/response"
+	"client/internal/entities"
 	"client/pb"
 )
 
@@ -74,18 +73,18 @@ func TestFmtFromGRPC(t *testing.T) {
 	})
 }
 
-func NewHttpReq() *request.Request {
+func NewHttpReq() *entities.Request {
 	var paymentDateBalance int32 = 10
 
-	return &request.Request{
+	return &entities.Request{
 		Name:    "Ivan",
 		Surname: "Ivanov",
-		Accounts: []request.Account{
+		Accounts: []entities.Account{
 			{
 				PaymentDateBalance: &paymentDateBalance,
 			},
 		},
-		Loans: []request.Loan{
+		Loans: []entities.Loan{
 			{
 
 				PaymentDate:       time.Date(2020, 6, 10, 0, 0, 0, 0, time.UTC),
@@ -113,11 +112,11 @@ func NewGRPCRequest() *pb.Request {
 	}
 }
 
-func NewHttpResponse() *response.Response {
-	return &response.Response{
+func NewHttpResponse() *entities.Response {
+	return &entities.Response{
 		Version:     "1.0",
 		ExecuteDate: "11-11-11",
-		Results: []response.Result{
+		Results: []entities.Result{
 			{
 				EnoughMoneyByMonths:          [6]int32{1, 0, 0, 0, 1, 1},
 				DelinquencyByMonths:          [6]int32{1, 0, 0, 0, 1, 1},

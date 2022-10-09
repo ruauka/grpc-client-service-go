@@ -9,15 +9,15 @@ import (
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 
-	"client/internal/request"
-	"client/internal/response"
+	"client/internal/entities"
+
 	"client/internal/utils/functions"
 	"client/pb"
 )
 
 // Strategy - Интерфейс для компонента Strategy.
 type Strategy interface {
-	Execute(ctx context.Context, req *request.Request) (*response.Response, error)
+	Execute(ctx context.Context, req *entities.Request) (*entities.Response, error)
 }
 
 // strategy - структура для подключения к gRPC-сервису.
@@ -46,7 +46,7 @@ func NewStrategy() (Strategy, error) {
 }
 
 // Execute - вызов основной rpc процедуры.
-func (s strategy) Execute(ctx context.Context, req *request.Request) (*response.Response, error) {
+func (s strategy) Execute(ctx context.Context, req *entities.Request) (*entities.Response, error) {
 	payload := functions.FmtToGRPC(req)
 
 	resp, err := s.client.Execute(context.Background(), payload)

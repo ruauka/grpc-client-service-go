@@ -7,14 +7,13 @@ import (
 	"github.com/go-playground/validator/v10"
 	"google.golang.org/protobuf/types/known/timestamppb"
 
-	"client/internal/request"
-	"client/internal/response"
+	"client/internal/entities"
 	"client/internal/utils/dictionary"
 	"client/pb"
 )
 
 // Validate - валидация структуры Request.
-func Validate(req *request.Request) error {
+func Validate(req *entities.Request) error {
 	err := dictionary.Validate.Struct(req)
 	if err != nil {
 		for _, err := range err.(validator.ValidationErrors) {
@@ -32,7 +31,7 @@ func DateDiff(date1, date2 time.Time) int32 {
 }
 
 // FmtToGRPC - конвертация из *request.Request в *pb.Request.
-func FmtToGRPC(req *request.Request) *pb.Request {
+func FmtToGRPC(req *entities.Request) *pb.Request {
 	var accountsSl []*pb.Account
 	for _, v := range req.Accounts {
 		account := &pb.Account{PaymentDateBalance: *v.PaymentDateBalance}
@@ -58,8 +57,8 @@ func FmtToGRPC(req *request.Request) *pb.Request {
 }
 
 // FmtFromGRPC - конвертация из *pb.Response в *response.Response.
-func FmtFromGRPC(resp *pb.Response) *response.Response {
-	var results []response.Result
+func FmtFromGRPC(resp *pb.Response) *entities.Response {
+	var results []entities.Result
 	enoughMoneyByMonths := [6]int32{}
 	delinquencyByMonths := [6]int32{}
 
@@ -71,7 +70,7 @@ func FmtFromGRPC(resp *pb.Response) *response.Response {
 			delinquencyByMonths[k] = n
 		}
 
-		result := &response.Result{
+		result := &entities.Result{
 			EnoughMoneyByMonths:          enoughMoneyByMonths,
 			DelinquencyByMonths:          delinquencyByMonths,
 			DelinquencyDurationDaysTotal: v.DelinquencyDurationDaysTotal,
@@ -80,7 +79,7 @@ func FmtFromGRPC(resp *pb.Response) *response.Response {
 		results = append(results, *result)
 	}
 
-	return &response.Response{
+	return &entities.Response{
 		Version:     resp.Version,
 		ExecuteDate: resp.ExecuteDate,
 		Results:     results,

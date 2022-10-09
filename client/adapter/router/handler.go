@@ -9,7 +9,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 
 	"client/adapter/grpc/strategy"
-	"client/internal/request"
+	"client/internal/entities"
 	"client/internal/utils/functions"
 )
 
@@ -28,7 +28,7 @@ func NewHandler(grpcConn strategy.Strategy) *Handler {
 // Call - основной http хендлер.
 func (h *Handler) Call(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	// Парсинг входящего JSON
-	req := &request.Request{}
+	req := &entities.Request{}
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
