@@ -9,8 +9,8 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/julienschmidt/httprouter"
 
-	"client/adapter/grpc/strategy"
-	"client/adapter/router"
+	"client/internal/adapters/grpc/strategy"
+	"client/internal/adapters/router"
 )
 
 func main() {

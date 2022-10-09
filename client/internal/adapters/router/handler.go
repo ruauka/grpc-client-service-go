@@ -8,7 +8,7 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 
-	"client/adapter/grpc/strategy"
+	"client/internal/adapters/grpc/strategy"
 	"client/internal/entities"
 	"client/internal/utils/functions"
 )
