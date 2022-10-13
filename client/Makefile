@@ -7,5 +7,5 @@ lint:
 vendor:
 	go mod vendor
 
-gen:
+proto:
 	@protoc --proto_path=./api/proto --go_out=. --go-grpc_out=. execute.proto

@@ -60,13 +60,13 @@ func FmtToGRPC(resp *response.Response) *pb.Response {
 }
 
 func FmtFromGRPC(req *pb.Request) *request.Request {
-	accounts := make([]request.Account, len(req.Accounts))
-	for i, v := range req.Accounts {
+	accounts := make([]request.Account, len(req.Account))
+	for i, v := range req.Account {
 		accounts[i].PaymentDateBalance = &v.PaymentDateBalance
 	}
 
-	loans := make([]request.Loan, len(req.Loans))
-	for i, v := range req.Loans {
+	loans := make([]request.Loan, len(req.Loan))
+	for i, v := range req.Loan {
 		loans[i].Payment = v.Payment
 		loans[i].PaymentDate = v.PaymentDate.AsTime()
 		loans[i].ActualPaymentDate = v.ActualPaymentDate.AsTime()

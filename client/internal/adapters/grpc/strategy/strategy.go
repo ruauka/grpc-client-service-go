@@ -22,7 +22,7 @@ type Strategy interface {
 
 // strategy - структура для подключения к gRPC-сервису.
 type strategy struct {
-	conn   *grpc.ClientConn
+	//conn   *grpc.ClientConn
 	client pb.ExecutorClient
 }
 
@@ -30,6 +30,7 @@ type strategy struct {
 func NewStrategy() (Strategy, error) {
 	conn, err := grpc.Dial(
 		":8080",
+		grpc.WithBlock(),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -40,7 +41,7 @@ func NewStrategy() (Strategy, error) {
 	log.Println("Connect to Strategy: ok")
 
 	return &strategy{
-		conn:   conn,
+		//conn:   conn,
 		client: pb.NewExecutorClient(conn),
 	}, nil
 }

@@ -1,5 +1,5 @@
-gen:
-	@protoc --proto_path=./proto --go_out=. --go-grpc_out=. execute.proto
+proto:
+	@protoc --proto_path=./api/proto --go_out=. --go-grpc_out=. execute.proto
 
 test:
 	go test -cover ./...
