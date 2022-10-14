@@ -9,20 +9,21 @@ import (
 	"github.com/gorilla/handlers"
 	"github.com/julienschmidt/httprouter"
 
-	"client/internal/adapters/grpc/strategy"
+	s "client/internal/adapters/grpc/strategy"
 	"client/internal/adapters/router"
 )
 
 func main() {
-	grpcConn, err := strategy.NewStrategy()
+	strategy, err := s.NewStrategy()
 	if err != nil {
 		log.Fatal(err)
 	}
-	handler := router.NewHandler(grpcConn)
+	handler := router.NewHandler(strategy)
 
 	r := httprouter.New()
 
 	r.POST("/execute", handler.Call)
+	r.GET("/health", handler.HealthCheck)
 
 	loggedRouter := handlers.LoggingHandler(os.Stdout, r)
 

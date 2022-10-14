@@ -8,21 +8,24 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 
 	"client/internal/entities"
 
-	"client/internal/utils/functions"
 	"client/pb"
+
+	"client/internal/utils/functions"
 )
 
 // Strategy - Интерфейс для компонента Strategy.
 type Strategy interface {
+	HealthCheck(ctx context.Context) error
 	Execute(ctx context.Context, req *entities.Request) (*entities.Response, error)
 }
 
 // strategy - структура для подключения к gRPC-сервису.
 type strategy struct {
-	//conn   *grpc.ClientConn
+	// conn   *grpc.ClientConn
 	client pb.ExecutorClient
 }
 
@@ -46,11 +49,24 @@ func NewStrategy() (Strategy, error) {
 	}, nil
 }
 
+// HealthCheck - check grpc service health.
+func (s strategy) HealthCheck(ctx context.Context) error {
+	_, err := s.client.HealthCheck(ctx, &emptypb.Empty{})
+	if err != nil {
+		errStatus, _ := status.FromError(err)
+		log.Println(errStatus.Message())
+		log.Println(errStatus.Code())
+		return err
+	}
+
+	return nil
+}
+
 // Execute - вызов основной rpc процедуры.
 func (s strategy) Execute(ctx context.Context, req *entities.Request) (*entities.Response, error) {
 	payload := functions.FmtToGRPC(req)
 
-	resp, err := s.client.Execute(context.Background(), payload)
+	resp, err := s.client.Execute(ctx, payload)
 	if err != nil {
 		errStatus, _ := status.FromError(err)
 		log.Println(errStatus.Message())

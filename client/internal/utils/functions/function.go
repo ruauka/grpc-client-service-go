@@ -2,6 +2,8 @@
 package functions
 
 import (
+	"encoding/json"
+	"net/http"
 	"time"
 
 	"github.com/go-playground/validator/v10"
@@ -11,6 +13,13 @@ import (
 	"client/internal/utils/dictionary"
 	"client/pb"
 )
+
+// MakeJSONResponse make http response to UI.
+func MakeJSONResponse(w http.ResponseWriter, httpStatus int, resp interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(httpStatus)
+	json.NewEncoder(w).Encode(resp) //nolint:errcheck,gosec
+}
 
 // Validate - валидация структуры Request.
 func Validate(req *entities.Request) error {

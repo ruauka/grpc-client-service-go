@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"google.golang.org/protobuf/types/known/emptypb"
+
 	"service/internal/logic"
 	"service/internal/request"
 	"service/internal/response"
@@ -28,6 +30,10 @@ func (s *Server) Execute(ctx context.Context, req *pb.Request) (*pb.Response, er
 	fmt.Println(resp)
 
 	return FmtToGRPC(resp), nil
+}
+
+func (s *Server) HealthCheck(ctx context.Context, empty *emptypb.Empty) (*emptypb.Empty, error) {
+	return &emptypb.Empty{}, nil
 }
 
 func FmtToGRPC(resp *response.Response) *pb.Response {

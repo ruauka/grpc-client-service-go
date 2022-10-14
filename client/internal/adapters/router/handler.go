@@ -19,10 +19,20 @@ type Handler struct {
 }
 
 // NewHandler - конструктор структуры хендлера.
-func NewHandler(grpcConn strategy.Strategy) *Handler {
+func NewHandler(strategy strategy.Strategy) *Handler {
 	return &Handler{
-		strategy: grpcConn,
+		strategy: strategy,
 	}
+}
+
+// HealthCheck - handler checks grpc service health.
+func (h *Handler) HealthCheck(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	if err := h.strategy.HealthCheck(context.Background()); err != nil {
+		functions.MakeJSONResponse(w, http.StatusBadRequest, map[string]string{"error": err.Error()})
+		return
+	}
+
+	functions.MakeJSONResponse(w, http.StatusOK, map[string]string{"status": "ok"})
 }
 
 // Call - основной http хендлер.

@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -22,6 +23,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ExecutorClient interface {
+	HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Execute(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
@@ -31,6 +33,15 @@ type executorClient struct {
 
 func NewExecutorClient(cc grpc.ClientConnInterface) ExecutorClient {
 	return &executorClient{cc}
+}
+
+func (c *executorClient) HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/strategy.Executor/HealthCheck", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *executorClient) Execute(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
@@ -46,6 +57,7 @@ func (c *executorClient) Execute(ctx context.Context, in *Request, opts ...grpc.
 // All implementations must embed UnimplementedExecutorServer
 // for forward compatibility
 type ExecutorServer interface {
+	HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	Execute(context.Context, *Request) (*Response, error)
 	mustEmbedUnimplementedExecutorServer()
 }
@@ -54,6 +66,9 @@ type ExecutorServer interface {
 type UnimplementedExecutorServer struct {
 }
 
+func (UnimplementedExecutorServer) HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HealthCheck not implemented")
+}
 func (UnimplementedExecutorServer) Execute(context.Context, *Request) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Execute not implemented")
 }
@@ -68,6 +83,24 @@ type UnsafeExecutorServer interface {
 
 func RegisterExecutorServer(s grpc.ServiceRegistrar, srv ExecutorServer) {
 	s.RegisterService(&Executor_ServiceDesc, srv)
+}
+
+func _Executor_HealthCheck_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ExecutorServer).HealthCheck(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/strategy.Executor/HealthCheck",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ExecutorServer).HealthCheck(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Executor_Execute_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -95,6 +128,10 @@ var Executor_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "strategy.Executor",
 	HandlerType: (*ExecutorServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "HealthCheck",
+			Handler:    _Executor_HealthCheck_Handler,
+		},
 		{
 			MethodName: "Execute",
 			Handler:    _Executor_Execute_Handler,

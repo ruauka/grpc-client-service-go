@@ -1,10 +1,12 @@
 syntax = "proto3";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
 
 package strategy;
 option go_package = "/pb";
 
 service Executor {
+  rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
   rpc Execute(Request) returns (Response) {}
 }
 
