@@ -11,11 +11,14 @@ import (
 
 	s "client/internal/adapters/grpc/strategy"
 	"client/internal/adapters/router"
+	"client/internal/config"
 )
 
 func main() {
+	// config create
+	cfg := config.GetConfig()
 	// create gRPC service instance and connect
-	strategy, err := s.NewStrategy()
+	strategy, err := s.NewStrategy(cfg)
 	if err != nil {
 		log.Fatal(err)
 	}

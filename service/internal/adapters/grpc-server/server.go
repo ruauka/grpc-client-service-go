@@ -28,6 +28,7 @@ func NewGRPCServer() *Server {
 
 // Execute - main procedure.
 func (s *Server) Execute(ctx context.Context, req *pb.Request) (*pb.Response, error) {
+	log.Println("new request")
 	// covert from client to service format
 	message := FmtFromGRPC(req)
 	// create data dict

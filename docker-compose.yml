@@ -1,0 +1,20 @@
+version: "3.8"
+services:
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    environment:
+      SERVICE_HOST: "service"
+      SERVICE_PORT: "8080"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - service
+
+  service:
+    container_name: service
+    build:
+      context: ./service
+      dockerfile: Dockerfile

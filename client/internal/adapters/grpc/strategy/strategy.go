@@ -3,6 +3,7 @@ package strategy
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"google.golang.org/grpc"
@@ -10,6 +11,7 @@ import (
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
 
+	"client/internal/config"
 	"client/internal/entities"
 
 	"client/pb"
@@ -30,9 +32,9 @@ type strategy struct {
 }
 
 // NewStrategy - builder for connecting to the gRPC service.
-func NewStrategy() (Strategy, error) {
+func NewStrategy(config *config.Config) (Strategy, error) {
 	conn, err := grpc.Dial(
-		":8080",
+		fmt.Sprintf("%s:%s", config.Host, config.Port),
 		grpc.WithBlock(),
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
