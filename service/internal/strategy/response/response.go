@@ -21,8 +21,8 @@ type Result struct {
 }
 
 // NewResponse - конструктор объекта ответа.
-func NewResponse(data *logic.Data) *Response {
-	return &Response{
+func NewResponse(data *logic.Data) Response {
+	return Response{
 		Version:     "v.1.0.0",
 		ExecuteDate: time.Now().Format(dictionary.LayoutToString),
 		Results: []Result{

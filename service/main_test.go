@@ -1,35 +1,36 @@
 package main
 
 import (
-	"bytes"
+	"context"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"net/http"
-	"net/http/httptest"
 	"testing"
 
-	"github.com/julienschmidt/httprouter"
+	"service/pb"
+
+	"service/internal/adapters/grpc-server"
 )
 
 func BenchmarkExecute(b *testing.B) {
+	srv := grpc_server.NewGRPCServer()
+
+	ctx := context.Background()
 	payload := prepare()
-	// Test server
-	router := httprouter.New()
-	router.POST("/execute", Execute)
-	// Test Request
-	w := httptest.NewRecorder()
-	req := httptest.NewRequest(http.MethodPost, "/execute", bytes.NewBuffer(payload))
 
 	for i := 0; i < b.N; i++ {
-		Execute(w, req, httprouter.Params{})
+		srv.Execute(ctx, payload)
 	}
 }
 
-func prepare() []byte {
+func prepare() *pb.Request {
 	data, err := ioutil.ReadFile("testdata/input.json")
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	return data
+	var payload pb.Request
+	json.Unmarshal(data, &payload)
+
+	return &payload
 }

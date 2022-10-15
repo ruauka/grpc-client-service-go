@@ -1,9 +1,7 @@
-// Package request - входящая структура.
+// Package request - input struct.
 package request
 
-import (
-	"time"
-)
+import "time"
 
 // Request - структура для входящего JSON.
 type Request struct {
@@ -20,7 +18,7 @@ type Account struct {
 
 // Loan - структура с данными по кредиту.
 type Loan struct {
-	Payment           int32     `json:"payment" validate:"required"`
 	PaymentDate       time.Time `json:"payment_date" validate:"required"`
 	ActualPaymentDate time.Time `json:"actual_payment_date" validate:"required"`
+	Payment           int32     `json:"payment" validate:"required"`
 }

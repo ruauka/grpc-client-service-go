@@ -6,14 +6,14 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"service/internal/logic"
-	"service/internal/request"
-	"service/internal/utils/dictionary"
+	"service/internal/strategy/logic"
+	"service/internal/strategy/request"
+	"service/internal/strategy/utils/dictionary"
 )
 
 func TestNewResponse(t *testing.T) {
 	data := NewTestData()
-	expected := &Response{
+	expected := Response{
 		Version:     "v.1.0.0",
 		ExecuteDate: time.Now().Format(dictionary.LayoutToString),
 		Results: []Result{

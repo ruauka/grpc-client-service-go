@@ -11,7 +11,7 @@ func TestResult_EnoughMoneyFinal(t *testing.T) {
 
 	TestTable := []struct {
 		enoughMoney bool
-		expected    int
+		expected    int32
 		testName    string
 	}{
 		{
@@ -40,7 +40,7 @@ func TestResult_DelinquencyFinal(t *testing.T) {
 
 	TestTable := []struct {
 		delinquency bool
-		expected    int
+		expected    int32
 		testName    string
 	}{
 		{
@@ -69,7 +69,7 @@ func TestResult_DelinquencyDurationFinal(t *testing.T) {
 
 	TestTable := []struct {
 		delinquencyDurationDays [6]int32
-		expected                int
+		expected                int32
 		testName                string
 	}{
 		{
@@ -93,7 +93,7 @@ func TestResult_DelinquencySumTotalCount(t *testing.T) {
 
 	TestTable := []struct {
 		delinquencySum [6]int32
-		expected       int
+		expected       int32
 		testName       string
 	}{
 		{

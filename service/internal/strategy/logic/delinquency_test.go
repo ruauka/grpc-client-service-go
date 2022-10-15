@@ -7,7 +7,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"metrics-service-1/internal/request"
+	"service/internal/strategy/request"
 )
 
 func TestNewLocal(t *testing.T) {
@@ -20,8 +20,8 @@ func TestLocal_EnoughMoneyCount(t *testing.T) {
 	data := NewTestData()
 
 	TestTable := []struct {
-		paymentDateBalance int
-		payment            int
+		paymentDateBalance int32
+		payment            int32
 		expected           bool
 		testName           string
 	}{
@@ -88,7 +88,7 @@ func TestLocal_DelinquencyDurationCount(t *testing.T) {
 	TestTable := []struct {
 		actualPaymentDate time.Time
 		paymentDate       time.Time
-		expected          int
+		expected          int32
 		testName          string
 	}{
 		{
@@ -119,10 +119,10 @@ func TestLocal_DelinquencySumCount(t *testing.T) {
 	data := NewTestData()
 
 	TestTable := []struct {
-		delinquencyDurationDays int
-		payment                 int
-		paymentDateBalance      int
-		expected                int
+		delinquencyDurationDays int32
+		payment                 int32
+		paymentDateBalance      int32
+		expected                int32
 		testName                string
 	}{
 		{
@@ -158,17 +158,17 @@ func NewTestData() *Data {
 }
 
 func NewTestReq() *request.Request {
-	paymentDateBalance := 0
+	var paymentDateBalance int32 = 0
 
 	return &request.Request{
 		Name:    "Ivan",
 		Surname: "Ivanov",
-		Account: []request.Account{
+		Accounts: []request.Account{
 			{
 				PaymentDateBalance: &paymentDateBalance,
 			},
 		},
-		Loan: []request.Loan{
+		Loans: []request.Loan{
 			{
 				Payment:           0,
 				PaymentDate:       time.Time{},
