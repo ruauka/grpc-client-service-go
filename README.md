@@ -5,12 +5,12 @@ This project is an example of integration between client and service using the g
 The project consists of 2 microservices and each runs in a container in docker-compose:
 
 1. Client - go service for calling second service using gRPC protocol.
-2. Service - go service, that get request from client, starts some calculating script and return response back to
+2. Service - go service, that get request from client, starts some calculating script and returns response back to
    client.
 
 ## Start
 
-To the start the project, you must run the command in the terminal:
+To start the project, you must run the command in the terminal:
 
 ```bash
 make dockerup
@@ -33,7 +33,7 @@ If client and service are alive you get JSON:
 }
 ```
 
-To get the main calculation, send a post request to http://localhost:8000/execute.
+To get the main calculation send a POST request to http://localhost:8000/execute.
 The example of request JSON you con find in directory:
 
 ```bash
