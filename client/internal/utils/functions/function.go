@@ -1,4 +1,4 @@
-// Package functions - пакет вспомогательных функций.
+// Package functions - a package of help functions.
 package functions
 
 import (
@@ -14,14 +14,14 @@ import (
 	"client/pb"
 )
 
-// MakeJSONResponse make http response to UI.
+// MakeJSONResponse make http response to client.
 func MakeJSONResponse(w http.ResponseWriter, httpStatus int, resp interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(httpStatus)
 	json.NewEncoder(w).Encode(resp) //nolint:errcheck,gosec
 }
 
-// Validate - валидация структуры Request.
+// Validate - Request struct validate.
 func Validate(req *entities.Request) error {
 	err := dictionary.Validate.Struct(req)
 	if err != nil {
@@ -33,13 +33,13 @@ func Validate(req *entities.Request) error {
 	return nil
 }
 
-// DateDiff - расчет разницы в датах.
+// DateDiff - calculation of the difference in dates..
 func DateDiff(date1, date2 time.Time) int32 {
 	duration := date2.Sub(date1).Hours() / dictionary.HourDivider
 	return int32(duration)
 }
 
-// FmtToGRPC - конвертация из *request.Request в *pb.Request.
+// FmtToGRPC - convert from *request.Request to *pb.Request.
 func FmtToGRPC(req *entities.Request) *pb.Request {
 	var accountsSl []*pb.Account
 	for _, v := range req.Accounts {
@@ -65,7 +65,7 @@ func FmtToGRPC(req *entities.Request) *pb.Request {
 	}
 }
 
-// FmtFromGRPC - конвертация из *pb.Response в *response.Response.
+// FmtFromGRPC - convert from *pb.Response to *response.Response.
 func FmtFromGRPC(resp *pb.Response) *entities.Response {
 	var results []entities.Result
 	enoughMoneyByMonths := [6]int32{}

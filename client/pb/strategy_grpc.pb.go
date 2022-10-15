@@ -23,7 +23,9 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type StrategyClient interface {
+	//  gRPC service health check
 	HealthCheck(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	// main rpc
 	Execute(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 }
 
@@ -57,7 +59,9 @@ func (c *strategyClient) Execute(ctx context.Context, in *Request, opts ...grpc.
 // All implementations must embed UnimplementedStrategyServer
 // for forward compatibility
 type StrategyServer interface {
+	//  gRPC service health check
 	HealthCheck(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
+	// main rpc
 	Execute(context.Context, *Request) (*Response, error)
 	mustEmbedUnimplementedStrategyServer()
 }

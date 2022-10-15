@@ -1,10 +1,10 @@
-// Package dictionary - справочники.
+// Package dictionary - dictionary.
 package dictionary
 
 import "github.com/go-playground/validator/v10"
 
-// HourDivider - Количество часов для деления.
+// HourDivider - The number of hours to divide.
 const HourDivider = 24
 
-// Validate - движок валидации.
+// Validate - validation engine.
 var Validate = validator.New()

@@ -17,19 +17,19 @@ import (
 	"client/internal/utils/functions"
 )
 
-// Strategy - Интерфейс для компонента Strategy.
+// Strategy - Interface for strategy struct.
 type Strategy interface {
 	HealthCheck(ctx context.Context) error
 	Execute(ctx context.Context, req *entities.Request) (*entities.Response, error)
 }
 
-// strategy - структура для подключения к gRPC-сервису.
+// strategy - structure for connecting to the gRPC service.
 type strategy struct {
 	// conn   *grpc.ClientConn
 	client pb.StrategyClient
 }
 
-// NewStrategy - конструктор подключения к gRPC-сервису.
+// NewStrategy - builder for connecting to the gRPC service.
 func NewStrategy() (Strategy, error) {
 	conn, err := grpc.Dial(
 		":8080",
@@ -49,7 +49,7 @@ func NewStrategy() (Strategy, error) {
 	}, nil
 }
 
-// NewMockStrategy - конструктор объекта мок-интерфейса.
+// NewMockStrategy - builder for mocking connecting to the gRPC service.
 func NewMockStrategy() Strategy {
 	testServer := &functions.TestGrpcServer{}
 	testServer.StartStrategyServer(NewMock())
@@ -73,7 +73,7 @@ func (s strategy) HealthCheck(ctx context.Context) error {
 	return nil
 }
 
-// Execute - вызов основной rpc процедуры.
+// Execute - main PRC.
 func (s strategy) Execute(ctx context.Context, req *entities.Request) (*entities.Response, error) {
 	payload := functions.FmtToGRPC(req)
 

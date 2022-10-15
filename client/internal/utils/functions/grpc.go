@@ -1,4 +1,3 @@
-// Package functions - пакет functions.
 package functions
 
 import (

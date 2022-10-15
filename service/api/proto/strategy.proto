@@ -6,7 +6,9 @@ package strategy;
 option go_package = "/pb";
 
 service Strategy {
+  //  gRPC service health check
   rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  // main rpc
   rpc Execute(Request) returns (Response) {}
 }
 
