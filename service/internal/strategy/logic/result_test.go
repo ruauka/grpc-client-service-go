@@ -68,12 +68,12 @@ func TestResult_DelinquencyDurationFinal(t *testing.T) {
 	data := NewTestData()
 
 	TestTable := []struct {
-		delinquencyDurationDays [6]int
+		delinquencyDurationDays [6]int32
 		expected                int
 		testName                string
 	}{
 		{
-			delinquencyDurationDays: [6]int{0, 1, 0, 1, 0, 1},
+			delinquencyDurationDays: [6]int32{0, 1, 0, 1, 0, 1},
 			expected:                3,
 			testName:                "test-1",
 		},
@@ -92,12 +92,12 @@ func TestResult_DelinquencySumTotalCount(t *testing.T) {
 	data := NewTestData()
 
 	TestTable := []struct {
-		delinquencySum [6]int
+		delinquencySum [6]int32
 		expected       int
 		testName       string
 	}{
 		{
-			delinquencySum: [6]int{10, 0, 20, 30, 0, 10},
+			delinquencySum: [6]int32{10, 0, 20, 30, 0, 10},
 			expected:       70,
 			testName:       "test-1",
 		},

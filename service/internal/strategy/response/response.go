@@ -4,8 +4,8 @@ package response
 import (
 	"time"
 
-	"service/internal/logic"
-	"service/internal/utils/dictionary"
+	"service/internal/strategy/logic"
+	"service/internal/strategy/utils/dictionary"
 )
 
 // Response - Структура ответа.

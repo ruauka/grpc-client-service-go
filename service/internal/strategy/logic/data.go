@@ -2,7 +2,7 @@
 package logic
 
 import (
-	"service/internal/request"
+	"service/internal/strategy/request"
 )
 
 // Data - data dict..

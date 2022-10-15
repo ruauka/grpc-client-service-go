@@ -1,40 +1,10 @@
 package grpc_server
 
 import (
-	"context"
-	"fmt"
-
-	"google.golang.org/protobuf/types/known/emptypb"
-
-	"service/internal/logic"
-	"service/internal/request"
-	"service/internal/response"
+	"service/internal/strategy/request"
+	"service/internal/strategy/response"
 	"service/pb"
 )
-
-type Server struct {
-	pb.UnimplementedStrategyServer
-}
-
-func (s *Server) Execute(ctx context.Context, req *pb.Request) (*pb.Response, error) {
-	fmt.Println("ping")
-	message := FmtFromGRPC(req)
-	// создание словаря данных.
-	data := logic.NewData(message)
-	// вызов методов логики.
-	data.LocalCount()
-	data.ResultCount()
-	// создание объекта ответа.
-	resp := response.NewResponse(data)
-
-	fmt.Println(resp)
-
-	return FmtToGRPC(resp), nil
-}
-
-func (s *Server) HealthCheck(ctx context.Context, empty *emptypb.Empty) (*emptypb.Empty, error) {
-	return &emptypb.Empty{}, nil
-}
 
 func FmtToGRPC(resp *response.Response) *pb.Response {
 	var results []*pb.Result
@@ -85,7 +55,3 @@ func FmtFromGRPC(req *pb.Request) *request.Request {
 		Loans:    loans,
 	}
 }
-
-//
-//i, _ := json.MarshalIndent(request, "", "   ")
-//fmt.Println(string(i))

@@ -6,22 +6,22 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"metrics-service-1/internal/request"
+	"service/internal/strategy/request"
 )
 
 func TestNewData(t *testing.T) {
-	paymentDateBalance := 0
+	var paymentDateBalance int32 = 0
 
 	expected := &Data{
 		Request: request.Request{
 			Name:    "Ivan",
 			Surname: "Ivanov",
-			Account: []request.Account{
+			Accounts: []request.Account{
 				{
 					PaymentDateBalance: &paymentDateBalance,
 				},
 			},
-			Loan: []request.Loan{
+			Loans: []request.Loan{
 				{
 					Payment:           0,
 					PaymentDate:       time.Time{},

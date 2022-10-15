@@ -5,24 +5,23 @@ import (
 	"net"
 	_ "net/http/pprof"
 
-	"google.golang.org/grpc"
-
-	"service/grpc_server"
+	"service/internal/adapters/grpc_server"
 	"service/pb"
 )
 
 func main() {
-	s := grpc.NewServer()
-	srv := &grpc_server.Server{}
-	pb.RegisterStrategyServer(s, srv)
+	srv := grpc_server.NewGRPCServer()
+
+	pb.RegisterStrategyServer(srv.GrpcServer, srv.UnimplementedStrategyServer)
 
 	l, err := net.Listen("tcp", ":8080")
-
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	if err := s.Serve(l); err != nil {
+	log.Println("Starting server...")
+
+	if err := srv.GrpcServer.Serve(l); err != nil {
 		log.Fatal(err)
 	}
 }

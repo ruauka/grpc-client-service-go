@@ -1,6 +1,6 @@
 package logic
 
-import "service/internal/utils/functions"
+import "service/internal/strategy/utils/functions"
 
 // Delinquency - структура для расчета внутренних агрегатов.
 type Delinquency struct {

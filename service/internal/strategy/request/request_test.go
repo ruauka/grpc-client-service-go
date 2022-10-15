@@ -6,18 +6,20 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/require"
+
+	"service/internal/strategy/utils/functions"
 )
 
 func TestValidateStruct(t *testing.T) {
 	req := NewTestReq()
 	t.Run("validation error", func(t *testing.T) {
-		err := ValidateStruct(req)
+		err := functions.Validate(req)
 		fmt.Println(err)
 		require.EqualError(t, err, "Key: 'Request.Loans[0].Payment' Error:Field validation for 'Payment' failed on the 'required' tag")
 	})
 	t.Run("success validation", func(t *testing.T) {
 		req.Loans[0].Payment = 10
-		err := ValidateStruct(req)
+		err := functions.Validate(req)
 		require.Equal(t, nil, err)
 	})
 }
