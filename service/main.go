@@ -14,7 +14,7 @@ import (
 func main() {
 	s := grpc.NewServer()
 	srv := &grpc_server.Server{}
-	pb.RegisterExecutorServer(s, srv)
+	pb.RegisterStrategyServer(s, srv)
 
 	l, err := net.Listen("tcp", ":8080")
 

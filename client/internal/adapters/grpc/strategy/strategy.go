@@ -26,7 +26,7 @@ type Strategy interface {
 // strategy - структура для подключения к gRPC-сервису.
 type strategy struct {
 	// conn   *grpc.ClientConn
-	client pb.ExecutorClient
+	client pb.StrategyClient
 }
 
 // NewStrategy - конструктор подключения к gRPC-сервису.
@@ -44,9 +44,20 @@ func NewStrategy() (Strategy, error) {
 	log.Println("Connect to Strategy: ok")
 
 	return &strategy{
-		//conn:   conn,
-		client: pb.NewExecutorClient(conn),
+		// conn:   conn,
+		client: pb.NewStrategyClient(conn),
 	}, nil
+}
+
+// NewMockStrategy - конструктор объекта мок-интерфейса.
+func NewMockStrategy() Strategy {
+	testServer := &functions.TestGrpcServer{}
+	testServer.StartStrategyServer(NewMock())
+
+	return &strategy{
+		//conn: testServer.Conn,
+		client: testServer.ConnectStrategy(),
+	}
 }
 
 // HealthCheck - check grpc service health.

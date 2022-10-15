@@ -1,0 +1,41 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package strategy;
+option go_package = "/pb";
+
+service Strategy {
+  rpc HealthCheck(google.protobuf.Empty) returns (google.protobuf.Empty) {}
+  rpc Execute(Request) returns (Response) {}
+}
+
+message Request {
+  string name = 1;
+  string surname = 2;
+  repeated Account account = 3;
+  repeated Loan loan = 4;
+}
+
+message Account {
+  int32 payment_date_balance = 1;
+}
+
+message Loan {
+  int32 payment = 1;
+  google.protobuf.Timestamp payment_date = 2;
+  google.protobuf.Timestamp actual_payment_date = 3;
+}
+
+message Response {
+  string version = 1;
+  string execute_date = 2;
+  repeated Result results = 3;
+}
+
+message Result {
+  repeated int32 enough_money_by_months = 1;
+  repeated int32 delinquency_by_months = 2;
+  int32 delinquency_duration_days_total = 3;
+  int32 delinquency_sum_total = 4;
+}

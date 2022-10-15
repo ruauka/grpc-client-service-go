@@ -13,7 +13,7 @@ import (
 )
 
 type Server struct {
-	pb.UnimplementedExecutorServer
+	pb.UnimplementedStrategyServer
 }
 
 func (s *Server) Execute(ctx context.Context, req *pb.Request) (*pb.Response, error) {
