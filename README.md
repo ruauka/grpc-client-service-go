@@ -10,7 +10,7 @@ The project consists of 2 microservices and each runs in a container in docker-c
 
 ## Start
 
-To start the project, you must run the command in the terminal:
+To start the project you must run the command in the terminal:
 
 ```bash
 make dockerup
