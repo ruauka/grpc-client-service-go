@@ -4,7 +4,7 @@ services:
     container_name: client
     build:
       context: ./client
-      dockerfile: Dockerfile
+      dockerfile: client.Dockerfile
     environment:
       SERVICE_HOST: "service"
       SERVICE_PORT: "8080"
@@ -17,4 +17,4 @@ services:
     container_name: service
     build:
       context: ./service
-      dockerfile: Dockerfile
+      dockerfile: service.Dockerfile
