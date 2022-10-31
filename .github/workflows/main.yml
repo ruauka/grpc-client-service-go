@@ -38,10 +38,10 @@ jobs:
         uses: golangci/golangci-lint-action@v3
         with:
           version: v1.49
-        working-directory: ./client
+          working-directory: ./client
 
-#      - name: Run Lints Service
-#        uses: golangci/golangci-lint-action@v3
-#        with:
-#          version: v1.49
-#        working-directory: ./service
+      - name: Run Lints Service
+        uses: golangci/golangci-lint-action@v3
+        with:
+          version: v1.49
+          working-directory: ./service
