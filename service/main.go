@@ -5,9 +5,8 @@ import (
 	"log"
 	"net"
 
-	"service/pb"
-
 	"service/internal/adapters/grpc-server"
+	"service/pb"
 )
 
 func main() {

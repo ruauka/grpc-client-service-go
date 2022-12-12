@@ -13,10 +13,10 @@ func FmtToGRPC(resp *response.Response) pb.Response {
 	delinquencyByMonths := make([]int32, len(resp.Results[0].DelinquencyByMonths))
 
 	for index, v := range resp.Results {
-		for i, j := range v.EnoughMoneyByMonths { //nolint:gosimple
+		for i, j := range v.EnoughMoneyByMonths {
 			enoughMoneyByMonths[i] = j
 		}
-		for k, n := range v.DelinquencyByMonths { //nolint:gosimple
+		for k, n := range v.DelinquencyByMonths {
 			delinquencyByMonths[k] = n
 		}
 
