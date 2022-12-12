@@ -35,5 +35,5 @@ func main() {
 
 	log.Println("Starting server...")
 
-	log.Fatal(http.ListenAndServe(":8000", loggedRouter)) //nolint:gosec
+	log.Fatal(http.ListenAndServe(":8000", loggedRouter))
 }
