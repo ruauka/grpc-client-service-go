@@ -1,6 +1,7 @@
 // Package main
 package main
 
+//nolint:goimports
 import (
 	"log"
 	"net"

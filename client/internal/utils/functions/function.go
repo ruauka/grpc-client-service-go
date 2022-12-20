@@ -72,10 +72,10 @@ func FmtFromGRPC(resp *pb.Response) *entities.Response {
 	delinquencyByMonths := [6]int32{}
 
 	for _, v := range resp.Results {
-		for i, j := range v.EnoughMoneyByMonths {
+		for i, j := range v.EnoughMoneyByMonths { //nolint:gosimple
 			enoughMoneyByMonths[i] = j
 		}
-		for k, n := range v.DelinquencyByMonths {
+		for k, n := range v.DelinquencyByMonths { //nolint:gosimple
 			delinquencyByMonths[k] = n
 		}
 
