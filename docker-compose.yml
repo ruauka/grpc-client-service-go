@@ -10,6 +10,7 @@ services:
       SERVICE_PORT: "8080"
     ports:
       - "8000:8000"
+    restart: always
     depends_on:
       - service
 
@@ -18,3 +19,4 @@ services:
     build:
       context: ./service
       dockerfile: service.Dockerfile
+    restart: always
