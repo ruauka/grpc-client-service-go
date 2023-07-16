@@ -1,4 +1,4 @@
-## Project description
+## Overview
 
 This project is an example of integration between client and service using the gRPC protocol.
 
